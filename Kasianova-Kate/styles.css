@@ -1,0 +1,288 @@
+/* Cyberpunk fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/digital-7-mono');
+
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: auto;
+}
+
+h1 {
+    color: #00ffff;
+    text-align: center;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 2.5em;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+#game-board {
+    width: 600px;
+    height: 450px;
+    background: linear-gradient(145deg, #0d1117, #161b22);
+    border: 2px solid #00ffff;
+    border-radius: 15px;
+    box-shadow:
+        0 0 30px rgba(0, 255, 255, 0.3),
+        inset 0 0 30px rgba(0, 255, 255, 0.1);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    padding: 16px;
+    background: linear-gradient(90deg, #1a1a2e, #16213e, #1a1a2e);
+    border-radius: 6px;
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+.header button {
+    background: linear-gradient(45deg, #ff0080, #ff4081);
+    border: 2px solid #ff0080;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 0 15px rgba(255, 0, 128, 0.4);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.header button:hover {
+    background: linear-gradient(45deg, #ff4081, #ff0080);
+    box-shadow: 0 0 25px rgba(255, 0, 128, 0.6);
+    transform: translateY(-2px);
+}
+
+.digits {
+    font-family: 'Digital-7 Mono', 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 28px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    color: #00ff00;
+    background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 80px;
+    box-shadow:
+        inset 0 0 10px rgba(0, 255, 0, 0.3),
+        0 0 20px rgba(0, 255, 0, 0.4);
+    text-align: center;
+    text-shadow: 0 0 10px #00ff00;
+    position: relative;
+    z-index: 2;
+}
+
+.field {
+    position: relative;
+    z-index: 2;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 2px;
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 1px solid #00ffff;
+    border-radius: 4px;
+    margin-right: 2px;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow:
+        inset 0 0 5px rgba(0, 255, 255, 0.1),
+        0 0 5px rgba(0, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.cell:hover {
+    background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+    box-shadow:
+        inset 0 0 10px rgba(0, 255, 255, 0.2),
+        0 0 15px rgba(0, 255, 255, 0.4);
+    transform: scale(1.02);
+}
+
+.mine {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a) !important;
+    border: 2px solid #ff0080 !important;
+    box-shadow:
+        inset 0 0 10px rgba(255, 0, 64, 0.3),
+        0 0 20px rgba(255, 0, 128, 0.6) !important;
+    animation: minePulse 2s infinite;
+}
+
+.mine::after {
+    content: '';
+    background-image: url('photo/image-Photoroom.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 8px #dd7ee0) brightness(1.2);
+}
+
+.flag {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 2px solid #94fffa;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    animation: flagPulse 3s ease-in-out infinite;
+}
+
+.flag::after {
+    content: '';
+    background-image: url('photo/flag.png');
+    /* путь к картинке флага */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 6px #8ac3f3);
+}
+
+@keyframes minePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            inset 0 0 10px rgba(255, 0, 64, 0.3),
+            0 0 20px rgba(0, 0, 0, 0.6);
+    }
+
+    50% {
+        box-shadow:
+            inset 0 0 15px rgba(255, 0, 64, 0.5),
+            0 0 30px rgba(255, 0, 128, 0.8);
+    }
+}
+
+@keyframes flagPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            inset 0 0 5px rgba(148, 255, 250, 0.2),
+            0 0 10px rgba(148, 255, 250, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            inset 0 0 8px rgba(148, 255, 250, 0.4),
+            0 0 15px rgba(148, 255, 250, 0.5);
+    }
+}
+
+/* Number styling */
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: 'Orbitron', monospace;
+    text-shadow: 0 0 8px currentColor;
+}
+
+.number-1 {
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+    /* Cyan */
+}
+
+.number-2 {
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+    /* Green */
+}
+
+.number-3 {
+    color: #ff0080;
+    text-shadow: 0 0 10px #ff0080;
+    /* Pink */
+}
+
+.number-4 {
+    color: #8000ff;
+    text-shadow: 0 0 10px #8000ff;
+    /* Purple */
+}
+
+.number-5 {
+    color: #ff8000;
+    text-shadow: 0 0 10px #ff8000;
+    /* Orange */
+}
+
+.number-6 {
+    color: #00ff80;
+    text-shadow: 0 0 10px #00ff80;
+    /* Mint */
+}
+
+.number-7 {
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff;
+    /* White */
+}
+
+.number-8 {
+    color: #ff4040;
+    text-shadow: 0 0 10px #ff4040;
+    /* Red */
+}
+
+/* Add glow animation to numbers */
+.number-1,
+.number-2,
+.number-3,
+.number-4,
+.number-5,
+.number-6,
+.number-7,
+.number-8 {
+    animation: numberGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes numberGlow {
+    from {
+        text-shadow: 0 0 5px currentColor;
+    }
+
+    to {
+        text-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
+    }
+}
