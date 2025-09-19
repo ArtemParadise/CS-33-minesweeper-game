@@ -1,0 +1,240 @@
+html, body {
+    margin: 0;
+    background-color: #2a0f18; /* page background */
+    color: #ffffff;            /* default text color */
+}
+
+h1 {
+    font-size: 80px;
+    text-align: center;
+    color: #f31f46;
+    font-family: 'Wallpoet', 'VT323', 'Orbitron', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(243, 31, 70, 0.35);
+    margin: 30px 0;
+}
+
+#game-board {
+    width: 600px;
+    height: 560px;
+    align-items: center;
+    padding: 40px;
+    background-color: rgba(93, 48, 58, 0.951);
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    padding: 0px 30px 30px 30px;
+    background-color: rgba(93, 48, 58, 0.951);
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 10px;
+}
+
+.digital {
+    font-family: 'Wallpoet', 'VT323', 'Orbitron', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #f31f46;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 36px;
+    background-color: #0a0a0a;
+    padding: 6px 10px;
+    border: 2px solid #f31f46;
+    border-radius: 4px;
+    text-shadow: 0 0 6px rgba(233, 76, 105, 0.6);
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 2px 0 #f34e6c;
+}
+
+.control-button {
+    font-family: 'Wallpoet', 'VT323', 'Orbitron', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #0a0a0a;
+    background-color: #f31f46f3;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #fa607d;
+}
+.control-button:hover {
+    filter: brightness(1.05);
+}
+.control-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(229, 53, 91, 0.6);
+}
+
+.row {
+    display: flex;
+}
+.cell {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(182, 9, 46);
+    background-image:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.25));
+    border: 2px solid rgb(222, 69, 102);
+    border-radius: 4px;
+    box-shadow:
+        inset 1px 1px 0 rgba(255, 255, 255, 0.35),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.25),
+        0 1px 0 rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    transition: transform 80ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.cell:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 2px 2px 0 rgba(0, 0, 0, 0.25),
+        inset -1px -1px 0 rgba(255, 255, 255, 0.2),
+        0 0 0 rgba(0, 0, 0, 0);
+    filter: brightness(0.95);
+}
+
+.mine::before {
+    content: '💣';
+    font-size: 16px;
+    color: rgb(73, 30, 39);
+    text-align: center;
+}
+
+/* Mine cells look flat, darker, and glow subtly */
+.mine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2b0f18;
+    background-image: none;
+    border-color: #8a1f35;
+    box-shadow:
+        inset 0 0 0 rgba(0, 0, 0, 0),
+        0 0 6px rgba(243, 31, 70, 0.35);
+    filter: saturate(1.1);
+    animation: mine-pulse 1600ms ease-in-out infinite;
+}
+
+/* Exploded mine: bright flash with orange/yellow burst and stronger glow */
+.mine.exploded {
+    background: radial-gradient(circle at 50% 50%, #ffd54a 10%, #ff8a00 45%, #6b1225 80%);
+    border-color: #ff5e7a;
+    box-shadow:
+        0 0 10px rgba(255, 94, 122, 0.7),
+        0 0 20px rgba(255, 138, 0, 0.6),
+        0 0 34px rgba(255, 205, 56, 0.45);
+    filter: saturate(1.2) brightness(1.05);
+    animation: explode-flash 800ms ease-out forwards;
+}
+
+.mine.exploded::before {
+    content: '💥';
+    font-size: 18px;
+    color: #2b0f18;
+    text-shadow: 0 0 6px rgba(255, 213, 74, 0.8), 0 1px 0 rgba(0,0,0,0.35);
+}
+
+/* Empty cells are also flat, lighter, and static */
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4a1e2c;
+    background-image: none;
+    border-color: #a73a55;
+    box-shadow: none;
+}
+
+/* Flagged cell */
+.flag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #2a2f4f, #1b1f36);
+    border-color: #7a80c9;
+    box-shadow: 0 0 8px rgba(122, 128, 201, 0.45);
+    color: #ffffff;
+}
+.flag::before {
+    content: '🚩';
+    font-size: 22px;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.35), 0 1px 0 rgba(0,0,0,0.35);
+}
+
+@keyframes mine-pulse {
+    0%, 100% { box-shadow: 0 0 4px rgba(243, 31, 70, 0.25); }
+    50% { box-shadow: 0 0 10px rgba(243, 31, 70, 0.45); }
+}
+
+@keyframes explode-flash {
+    0% {
+        transform: scale(1.03);
+        filter: saturate(1.4) brightness(1.4);
+    }
+    60% {
+        transform: scale(1.0);
+        filter: saturate(1.15) brightness(1.1);
+    }
+    100% {
+        transform: scale(1.0);
+        filter: saturate(1.0) brightness(1.0);
+        box-shadow: 0 0 8px rgba(243, 31, 70, 0.35);
+    }
+}
+
+/* Victory-styled numbered cells */
+.number1,
+.number2,
+.number3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: none;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+.number1 {
+    background: linear-gradient(180deg, #1fa94c, #0f7032);
+    border-color: #33d167;
+    box-shadow: 0 0 8px rgba(31, 169, 76, 0.55);
+    color: #ffffff;
+}
+.number1::before {
+    content: '1';
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.35);
+}
+
+.number2 {
+    background: linear-gradient(180deg, #1f9fa9, #0d5c66);
+    border-color: #3bd8e4;
+    box-shadow: 0 0 8px rgba(59, 216, 228, 0.55);
+    color: #ffffff;
+}
+.number2::before {
+    content: '2';
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.35);
+}
+
+.number3 {
+    background: linear-gradient(180deg, #f7d11e, #c98e0a);
+    border-color: #ffd84d;
+    box-shadow: 0 0 8px rgba(247, 209, 30, 0.55);
+    color: #0a0a0a;
+}
+.number3::before {
+    content: '3';
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 1px 0 rgba(0,0,0,0.35);
+}
